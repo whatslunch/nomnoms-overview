@@ -1,59 +1,37 @@
 import React from 'react';
-import $ from 'jquery';
+import styled from 'styled-components';
+import Pictures from './Pictures.jsx';
+
+const Wrapper = styled.section`
+  padding: 4em;
+  background: papayawhip;
+  display: flex;
+  flex-direction: row;
+`;
+
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      images: []
+      images: [],
     }
-
     this.restaurant = {};
-    this.images = [];
   };
-
-  fetchData(id, callback) {
-    $.ajax({
-      method: 'GET',
-      url: `/${id}`,
-      success: (data) => {
-        callback(data);
-      }
-    })
-  };
-
-  parseData(array) {
-    var newArray = [];
-    for (var image of array) {
-      newArray.push(image.image)
-    };
-    this.setState({
-      images: newArray
-    })
-  }
-
-  componentWillMount() {
-    this.fetchData(1, (data) => {
-      this.parseData(data);
-    });
-  }
-
 
   render() {
+
     return (
 
       <div>
 
-        <h2>WE'RE CONNECTED BABY</h2>
-        {this.state.images.map(image => {
-          return <img src={image}/>
-        })}
-
+        <Pictures />
+            
       </div>
 
     )
   };
 
-}
+};
 
 export default App;
