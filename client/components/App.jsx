@@ -1,18 +1,43 @@
 import React from 'react';
-
-
-var faker = require('faker');
-
-
-var randomtest = faker.date.recent(); // Rowan Nikolaus
-
-console.log(randomtest);
-
+import $ from 'jquery';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      images: []
+    }
+
+    this.restaurant = {};
+    this.images = [];
   };
+
+  fetchData(id, callback) {
+    $.ajax({
+      method: 'GET',
+      url: `/${id}`,
+      success: (data) => {
+        callback(data);
+      }
+    })
+  };
+
+  parseData(array) {
+    var newArray = [];
+    for (var image of array) {
+      newArray.push(image.image)
+    };
+    this.setState({
+      images: newArray
+    })
+  }
+
+  componentWillMount() {
+    this.fetchData(1, (data) => {
+      this.parseData(data);
+    });
+  }
+
 
   render() {
     return (
@@ -20,11 +45,14 @@ class App extends React.Component {
       <div>
 
         <h2>WE'RE CONNECTED BABY</h2>
+        {this.state.images.map(image => {
+          return <img src={image}/>
+        })}
 
       </div>
 
     )
-  }
+  };
 
 }
 
