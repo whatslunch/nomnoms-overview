@@ -31,6 +31,7 @@ const NextIcon = styled.svg`
   z-index: 500;
   position: relative;
   margin-top: 200%;
+  margin-left: 30%;
   transition: fill 0.25s;
   ${NxButton}: hover & {
     fill: rebeccapurple;
@@ -44,6 +45,7 @@ const PreviousIcon = styled.svg`
   z-index: 500;
   position: relative;
   margin-top: 200%;
+  margin-right: 30%;
   transition: fill 0.25s;
   ${PrvButton}: hover & {
     fill: rebeccapurple;

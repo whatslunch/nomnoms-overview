@@ -26,13 +26,11 @@ class Pictures extends React.Component {
       currentModalId: 0,
       images: []
     }
-    this.showThree = [];
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
     this.handleNextButton = this.handleNextButton.bind(this);
     this.handleBackButton = this.handleBackButton.bind(this);
   };
-
 
   showModal(e) {
     let display = e.target.getAttribute('src');

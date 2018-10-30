@@ -6,10 +6,6 @@ import Pictures from './Pictures.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      images: [],
-    }
-    this.restaurant = {};
   };
 
   render() {
