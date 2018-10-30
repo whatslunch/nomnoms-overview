@@ -2,17 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import Modal from 'react-responsive-modal';
 import axios  from 'axios';
+import ModalView from './ModalView.jsx';
 
 const Image = styled.img`
   height: 250px;
   width: 250px;
   object-fit: cover;
-`;
-
-const CurrImage = styled.img`
-  object-fit: cover;
-  height: 100%;
-  width: 100%;
 `;
 
 const Wrapper = styled.section`
@@ -68,7 +63,7 @@ class Pictures extends React.Component {
 
   componentWillMount() {
     this.fetchData(1, (data) => {
-      this.parseData(data);
+      this.parseData(data.images);
     });
   }
 
@@ -82,7 +77,7 @@ class Pictures extends React.Component {
           <Image onClick={(e) => this.showModal(e)} src={this.state.images[2]} />
 
           <Modal open={this.state.show} onClose={this.hideModal} center>
-            <CurrImage src={this.state.currentModalUrl} />
+            <ModalView picture={this.state.currentModalUrl} />
           </Modal>
 
       </Wrapper>
