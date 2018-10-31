@@ -1,7 +1,8 @@
 const express = require('express');
-const app = express();
 const path = require('path');
 const db = require('../database/index.js');
+
+const app = express();
 const PORT = 9001;
 
 app.use(express.static(path.join(__dirname, '../public/')));
@@ -13,18 +14,17 @@ app.get('/:id', (req, res) => {
 });
 
 app.get('/api/:id', (req, res) => {
-  var id = req.params.id;
-  var data = {}
+  const theId = req.params.id;
+  const data = {};
 
-  db.query(`SELECT * from images WHERE images.restaurant = ${id}`, (err, result) => {
+  db.query(`SELECT * from images WHERE images.restaurant = ${theId}`, (err, result) => {
     data.images = result;
-    db.query(`SELECT name, address from restaurants WHERE id = ${id}`, (err, theData) => {
+    db.query(`SELECT name, address from restaurants WHERE id = ${theId}`, (err2, theData) => {
+      if (err2) { console.log(err2); }
       data.restaurant = theData;
       res.send(data);
-    })
+    });
   });
-
 });
-
 
 app.listen(PORT, console.log('Listening on port:', PORT));
