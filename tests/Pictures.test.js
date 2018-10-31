@@ -9,7 +9,3 @@ describe('ModalView Component', () => {
     expect(showState).toEqual(false);
   })
 })
-
-
-
-

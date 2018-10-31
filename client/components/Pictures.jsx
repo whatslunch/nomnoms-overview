@@ -47,7 +47,7 @@ class Pictures extends React.Component {
   };
 
   fetchData(id, callback) {
-    axios.get(`/${id}`)
+    axios.get(`/api/${id}`)
       .then((response) => {
         callback(response.data);
       });
@@ -64,7 +64,8 @@ class Pictures extends React.Component {
   };
 
   componentDidMount() {
-    this.fetchData(1, (data) => {
+    let id = window.location.pathname.slice(1);
+    this.fetchData(id, (data) => {
       this.parseData(data.images);
     });
   }

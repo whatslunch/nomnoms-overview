@@ -9,6 +9,10 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 app.get('/:id', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/index.html'));
+});
+
+app.get('/api/:id', (req, res) => {
   var id = req.params.id;
   var data = {}
 
