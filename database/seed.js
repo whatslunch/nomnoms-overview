@@ -1,6 +1,5 @@
 const faker = require('faker');
 const db = require('./index.js');
-// var AWS = require('aws-sdk'); not required
 
 const getRandomInt = max => Math.floor(Math.random() * Math.floor(max));
 
@@ -10,6 +9,9 @@ const seed = (restaurants = 100) => {
   let randomName;
   let randomAddress;
   let randomCost;
+  let randomPhone;
+  let randomWebsite;
+  let randomGoogleMap;
   let query;
 
   // seeding the restaurants table
@@ -17,9 +19,13 @@ const seed = (restaurants = 100) => {
     randomName = faker.company.companyName();
     randomAddress = [faker.address.streetAddress(), faker.address.city(), faker.address.state(), faker.address.zipCode()].join(', ');
     randomCost = getRandomInt(5) + 1;
-    query = 'INSERT INTO restaurants (name, address, cost) VALUE(?, ?, ?);';
+    randomPhone = faker.phone.phoneNumberFormat();
+    randomWebsite = faker.internet.url();
+    randomGoogleMap = `https://s3-us-west-1.amazonaws.com/yump-sf-overview/maps/${getRandomInt(5) + 1}.png`;
 
-    db.query(query, [randomName, randomAddress, randomCost], (err) => {
+    query = 'INSERT INTO restaurants (name, address, cost, phone, website, googleMap) VALUE(?, ?, ?, ?, ?, ?);';
+
+    db.query(query, [randomName, randomAddress, randomCost, randomPhone, randomWebsite, randomGoogleMap], (err) => {
       if (err) { console.log(err); }
     });
   }

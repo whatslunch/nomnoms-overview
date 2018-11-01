@@ -19,7 +19,7 @@ app.get('/api/:id', (req, res) => {
 
   db.query(`SELECT * from images WHERE images.restaurant = ${theId}`, (err, result) => {
     data.images = result;
-    db.query(`SELECT name, address from restaurants WHERE id = ${theId}`, (err2, theData) => {
+    db.query(`SELECT * from restaurants WHERE id = ${theId}`, (err2, theData) => {
       if (err2) { console.log(err2); }
       data.restaurant = theData;
       res.send(data);

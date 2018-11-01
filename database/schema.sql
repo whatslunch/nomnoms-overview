@@ -17,6 +17,9 @@ CREATE TABLE restaurants (
   id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(50),
   address TEXT,
+  phone TEXT,
+  website TEXT,
+  googleMap TEXT,
   cost INT,
   PRIMARY KEY (ID)
 );
