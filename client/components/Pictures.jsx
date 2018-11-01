@@ -57,7 +57,6 @@ const Wrapper = styled.div`
   }
   button {
     display: flex;
-    align-items: center;
     font-weight: bold;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: black;
@@ -85,6 +84,10 @@ const Wrapper = styled.div`
         fill: white;
       }
     }
+  }
+  span {
+    margin-bottom: 5px;
+    margin-right: 10px;
   }
 `;
 
@@ -217,7 +220,7 @@ class Pictures extends React.Component {
             <svg>
             <path d="M15 15H3a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2h2a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2zM9 4.75a4.25 4.25 0 1 0 0 8.5 4.25 4.25 0 0 0 0-8.5zM11 10h-1v1a1 1 0 0 1-2 0v-1H7a1 1 0 0 1 0-2h1V7a1 1 0 0 1 2 0v1h1a1 1 0 0 1 0 2z" />
             </svg>
-            Add a Photo
+            <span>Add a Photo</span>
           </button>
           <button>
             <svg>
@@ -226,10 +229,10 @@ class Pictures extends React.Component {
             <span>Share</span> 
           </button>
           <button>
-            <svg>
+            <svg className="save">
               <path d="M9 1H5a2 2 0 0 0-2 2v10l4-3 4 3V3a2 2 0 0 0-2-2z" />
             </svg>
-            Save
+            <span>Save</span>
           </button>
         </div>
         <div className="pictures">
