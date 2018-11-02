@@ -1,22 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 import Pictures from './Pictures.jsx';
 
+const App = () => (
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-  };
+  <Pictures />
 
-  render() {
-
-    return (
-
-      <Pictures />
-            
-    )
-  };
-
-};
-
+);
 export default App;

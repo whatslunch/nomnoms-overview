@@ -7,5 +7,8 @@
 
 module.exports = { 
   "parser": "babel-eslint",
-  "extends": "airbnb"
+  "extends": "airbnb",
+  "globals": {
+    "window": true,
+  }
 };

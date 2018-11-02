@@ -25,7 +25,8 @@ const seed = (restaurants = 100) => {
 
     query = 'INSERT INTO restaurants (name, address, cost, phone, website, googleMap) VALUE(?, ?, ?, ?, ?, ?);';
 
-    db.query(query, [randomName, randomAddress, randomCost, randomPhone, randomWebsite, randomGoogleMap], (err) => {
+    db.query(query, [randomName, randomAddress, randomCost,
+      randomPhone, randomWebsite, randomGoogleMap], (err) => {
       if (err) { console.log(err); }
     });
   }
@@ -38,7 +39,7 @@ const seed = (restaurants = 100) => {
   let randomImage;
   let query2;
   // seeding the image table
-  for (let j = 0; j < 500; j += 1) {
+  for (let j = 0; j < 2000; j += 1) {
     randomUser = faker.name.findName(); // Rowan Nikolaus
     randomDescription = faker.lorem.sentences();
     randomDate = faker.date.recent();
