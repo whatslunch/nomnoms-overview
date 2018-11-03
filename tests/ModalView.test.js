@@ -14,13 +14,15 @@ describe('Modal Component', () => {
     const buttons = wrapper.find('a');
     expect(buttons.length).toEqual(2);
   });
-  // it('should call handler functions on button click', () => {
-  //   const wrapper = shallow(<ModalView {...mockProps} />);
-  //   const forwardButton = wrapper.find('a.right');
-  //   const backwardButton = wrapper.find('a.left');
-  //   forwardButton.simulate('click');
-  //   backwardButton.simulate('click');
-  // });
+  it('should call handler functions on button click', () => {
+    const wrapper = mount(<ModalView {...mockProps} />);
+    const forwardButton = wrapper.find('a.right');
+    const backwardButton = wrapper.find('a.left');
+    forwardButton.simulate('click');
+    backwardButton.simulate('click');
+    expect(wrapper.props().handleBackButton).toBeCalled();
+    expect(wrapper.props().handleNextButton).toBeCalled();
+  });
 })
 // Pictures.prototype.handlePictureEnter = jest.fn()
 // expect(Pictures.prototype.handlePictureEnter).toBeCalled();
