@@ -21,7 +21,7 @@ const seed = (restaurants = 100) => {
     randomCost = getRandomInt(5) + 1;
     randomPhone = faker.phone.phoneNumberFormat();
     randomWebsite = faker.internet.url();
-    randomGoogleMap = `https://s3-us-west-1.amazonaws.com/yump-sf-overview/maps/${getRandomInt(5) + 1}.png`;
+    randomGoogleMap = `https://s3.amazonaws.com/whats-lunch/images/maptile_${getRandomInt(5) + 1}.png`;
 
     query = 'INSERT INTO restaurants (name, address, cost, phone, website, googleMap) VALUE(?, ?, ?, ?, ?, ?);';
 
