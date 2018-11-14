@@ -10,7 +10,8 @@
   "scripts": {
     "build:watch": "webpack -d --watch",
     "start:watch": "nodemon ./server/index.js",
-    "seed": "node ./database/seed/generate.js",
+    "seed:gen": "node ./database/seed/generate.js",
+    "load:db0": "node ./database/db0/seed.js",
     "test": "jest --coverage"
   },
   "dependencies": {
@@ -23,6 +24,7 @@
     "styled-components": "^4.0.2"
   },
   "devDependencies": {
+    "async": "^2.6.1",
     "@babel/cli": "^7.1.2",
     "@babel/core": "^7.1.2",
     "@babel/preset-env": "^7.1.0",
@@ -31,6 +33,7 @@
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
     "bluebird": "^3.5.3",
+    "csv-parse": "^3.2.0",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0",
     "eslint": "^5.8.0",

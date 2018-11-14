@@ -1,7 +1,6 @@
 
 const arr2csv = (array, cols, cb) => {
   
-  let cols = ['name','lat','lng','street','city','state','zip','cost','phone','website'];
   let data = '';
 
   const compileRow = (elem) => {

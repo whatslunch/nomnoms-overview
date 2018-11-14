@@ -1,6 +1,9 @@
-CREATE DATABASE overview;
+CREATE DATABASE IF NOT EXISTS nomnoms;
 
-USE overview;
+USE nomnoms;
+
+DROP TABLE IF EXISTS images;
+DROP TABLE IF EXISTS restaurants;
 
 CREATE TABLE images (
   id INT NOT NULL AUTO_INCREMENT,
@@ -15,11 +18,12 @@ CREATE TABLE images (
 
 CREATE TABLE restaurants (
   id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(50),
+  name VARCHAR(100),
   address TEXT,
   phone TEXT,
   website TEXT,
-  googleMap TEXT,
+  lat DECIMAL(10, 6),
+  lng DECIMAL(10, 6),
   cost INT,
   PRIMARY KEY (ID)
 );

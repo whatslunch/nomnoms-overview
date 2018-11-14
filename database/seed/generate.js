@@ -15,16 +15,19 @@ const getRandomVenueType = () => {
 
 const genRestaurantSeed = (n) => {
   let records = [];
+  const PREFIXES = ['The', ''];
+  const SUFFIXES = ['Kitchen', 'Inn', 'Tavern', 'Table', 'Bakery', 'Cafe', 'Pub', 'Place', '', '', '', '', '', ''];
   for (let i = 0; i < n; i += 1) {
+    let base = `${faker.company.companyName().replace(' LLC','').replace(' Inc','').replace(' Group','')}`;
+    let pref = base.split(' ')[0] === 'The'? '': PREFIXES[getRandomBetween(PREFIXES.length - 1, 0, 0)];
+    let suff = SUFFIXES[getRandomBetween(SUFFIXES.length - 1, 0, 0)];
+    let inst = getRandomBetween(n - 1, 0, 0);
     records.push({
-      name: `"${faker.company.companyName().replace('LLC','Inn').replace('Inc','Kitchen').replace('Group','Table')}"`,
+      name: `"${[pref, base, suff, inst].join(' ')}"`.trim(),
       lat: getRandomBetween(37.720151, 37.785006, 6),
       lng: getRandomBetween(-122.397980, -122.498002, 6),
-      street: faker.address.streetAddress(),
-      city: 'San Francisco',
-      state: 'CA',
-      zip: '941' + getRandomBetween(40, 10, 0),
-      cost: getRandomBetween(5, 1, 0),
+      address: `"${faker.fake('{{address.streetAddress}}, San Francisco, CA 941' + getRandomBetween(40, 10, 0))}"`,
+      cost: getRandomBetween(5, 0, 0),
       phone: ['(415)', ' ', getRandomBetween(999, 100, 0), '-', getRandomBetween(9999, 1000, 0)].join(''),
       website: faker.internet.url(),
     });
@@ -42,9 +45,9 @@ const genImageSeed = (n) => {
   return records;
 }
 
-const restaurantSeed = genRestaurantSeed(1000);
+const restaurantSeed = genRestaurantSeed(10000);
 
-arr2csv(restaurantSeed, ['name','lat','lng','street','city','state','zip','cost','phone','website'], (err, csv) => {
+arr2csv(restaurantSeed, ['name','lat','lng','address','cost','phone','website'], (err, csv) => {
   fs.writeFile('./database/seed/restaurants.csv', csv, 'utf8', () => {
     console.log('restaurants generated');
   });
