@@ -8,8 +8,9 @@
 
 ## Optional
 
+> GET    - `/restaurant` retrieves all existing restaurant records.
 > POST   - `/restaurant` inserts a new restaurant record - body should contain some field:value pairs to populate new record with.
-> GET    - `/restaurant/:id` retrieves a existing restaurant record.
-> PATCH  - `/restaurant/:id` updates an existing restaurant record - body should contain some field:value pairs to update record with.
+> GET    - `/restaurant/:id` retrieves an existing restaurant record.
+> PUT    - `/restaurant/:id` updates an existing restaurant record - body should contain some field:value pairs to update record with.
 > DELETE - `/restaurant/:id` deletes an existing restaurant record
 

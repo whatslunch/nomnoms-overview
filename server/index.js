@@ -23,10 +23,17 @@ app.get('/api/:id', (req, res) => {
   });
 });
 
-app.get('/restaurant/:id', (req, res) => {
-  db.Restaurant.getOne(req.params.id, err => {
+app.get('/restaurant', (req, res) => {
+  db.Restaurant.getAll((err, data) => {
     if (err) res.status(500).send(err.message);
-    else res.end();
+    else rest.end(data);
+  });
+});
+
+app.get('/restaurant/:id', (req, res) => {
+  db.Restaurant.getOne(req.params.id, (err, data) => {
+    if (err) res.status(500).send(err.message);
+    else res.end(data);
   });
 });
 
@@ -37,7 +44,7 @@ app.post('/restaurant', (req, res) => {
   });
 });
 
-app.patch('/restaurant/:id', (req, res) => {
+app.put('/restaurant/:id', (req, res) => {
   db.Restaurant.updateOne(req.params.id, req.body, err => {
     if (err) res.status(500).send(err.message);
     else res.end();

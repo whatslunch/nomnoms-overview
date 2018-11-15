@@ -189,7 +189,7 @@ class Pictures extends React.Component {
         name: data.restaurant[0].name,
         phone: data.restaurant[0].phone,
         website: data.restaurant[0].website,
-        googleMap: data.restaurant[0].googleMap,
+        googleMap: 'https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwitxdjqkNfeAhWKrVQKHSxTCd0QjRx6BAgBEAU&url=https%3A%2F%2Fevents.mobilizeamerica.io%2Fmidems%2Fevent%2F8147%2F&psig=AOvVaw20i7ZQ1X9V-IoF-Zixb5nP&ust=1542396484413272',
         cost: costString,
       },
     });
