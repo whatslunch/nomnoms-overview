@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS images;
 DROP TABLE IF EXISTS restaurants;
 
 CREATE TABLE images (
-  id INT NOT NULL AUTO_INCREMENT,
+  id SERIAL,
   user VARCHAR(30),
   image TEXT,
   description TEXT,
@@ -17,13 +17,20 @@ CREATE TABLE images (
 );
 
 CREATE TABLE restaurants (
-  id INT NOT NULL AUTO_INCREMENT,
+  id SERIAL,
   name VARCHAR(100),
-  address TEXT,
-  phone TEXT,
-  website TEXT,
   lat DECIMAL(10, 6),
   lng DECIMAL(10, 6),
+  address TEXT,
   cost INT,
+  phone TEXT,
+  website TEXT,
   PRIMARY KEY (ID)
 );
+
+LOAD DATA INFILE '/Users/wgodfrey/Documents/HackReactor/immersive/hrsf105-system-design-capstone/nomnoms-overview/database/seed/restaurants.csv'
+INTO TABLE restaurants
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
