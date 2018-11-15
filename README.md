@@ -33,7 +33,7 @@ An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
 
 ## Development
 
-### Installing Dependencies
+## Installing Dependencies
 
 From within the root directory:
 
@@ -41,4 +41,11 @@ From within the root directory:
 npm install -g webpack
 npm install
 ```
+
+## CRUD Plan
+
+> Create  POST   /restaurant         insert new restaurant record - body should contain some field:value pairs to populate new record with
+> Read    GET    /restaurant/:id     retrieve existing restaurant record
+> Update  PATCH  /restaurant/:id     update an existing restaurant record - body should contain some field:value pairs to update record with
+> Delete  DELETE /restaurant/:id     delete an existing restaurant record
 
