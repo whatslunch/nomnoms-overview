@@ -22,11 +22,11 @@ class Restaurant {
   }
 
   updateOne(id, opts, cb) {
-    this.connection.query(`UPDATE restaurants SET ${Object.keys(opts).map(key => key + ' = ?').join(', ')} WHERE id = ${id}`, Object.values(opts), cb);
+    this.connection.query(`UPDATE restaurants SET ${Object.keys(opts).map(key => return key + ' = ?').join(', ')} WHERE id = ${id}`, Object.values(opts), cb);
   }
 
-  deleteOne(opts, cb) {
-    this.connection.query(`DELETE FROM restaurants WHERE id = ?`, opts, cb);
+  deleteOne(id, cb) {
+    this.connection.query(`DELETE FROM restaurants WHERE id = ${id}`, cb);
   }
 
 }

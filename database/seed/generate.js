@@ -19,7 +19,7 @@ const genRestaurantSeed = (n, cb) => {
   let i = 0;
   const PREFIXES = ['The', ''];
   const SUFFIXES = ['Kitchen', 'Inn', 'Tavern', 'Table', 'Bakery', 'Cafe', 'Pub', 'Place', '', '', '', '', '', ''];
-  const COLUMNS  = ['id','name','lat','lng','address','cost','phone','website'];
+  const COLUMNS  = ['name','lat','lng','address','cost','phone','website'];
 
   const write = () => {
     while (i < n) {
@@ -30,7 +30,6 @@ const genRestaurantSeed = (n, cb) => {
       let suff = SUFFIXES[getRandomBetween(SUFFIXES.length - 1, 0, 0)];
       let inst = getRandomBetween(n - 1, 0, 0);
       let data = {
-        id: i,
         name: `"${[pref, base, suff, inst].join(' ').split('  ').join(' ').trim()}"`,
         lat: getRandomBetween(37.720151, 37.785006, 6),
         lng: getRandomBetween(-122.397980, -122.498002, 6),
@@ -44,7 +43,7 @@ const genRestaurantSeed = (n, cb) => {
         row += data[field] + ',';
       });
       row = row.slice(0, row.length - 1);
-      row += '\r\n';
+      row += '\n';
       if (!stream.write(row)) {
         return;
       }
@@ -58,7 +57,7 @@ const genRestaurantSeed = (n, cb) => {
     write();
   });
 
-  stream.write(COLUMNS.join(',') + '\r\n');
+  stream.write(COLUMNS.join(',') + '\n');
   write();
 }
 
@@ -66,7 +65,7 @@ const genImageSeed = (n, cb) => {
   const stream = fs.createWriteStream('./database/seed/images.csv');
   
   let i = 0;
-  const COLUMNS  = ['id','src','restaurant_id'];
+  const COLUMNS  = ['src','restaurant_id'];
 
   const write = () => {
     while (i < n) {
@@ -75,7 +74,6 @@ const genImageSeed = (n, cb) => {
       let rows = '';
       for (let j = 0; j < 3; j += 1) {
         let data = {
-          id: i*3 + j - 2,
           src: `https://s3.amazonaws.com/whats-lunch/images/${getRandomBetween(23, 0, 0)}.jpg`,
           restaurant_id: i,
         }
@@ -84,7 +82,7 @@ const genImageSeed = (n, cb) => {
           row += data[field] + ',';
         });
         rows += row.slice(0, row.length - 1);
-        rows += '\r\n';
+        rows += '\n';
       }
 
       if (!stream.write(rows)) {
@@ -92,22 +90,23 @@ const genImageSeed = (n, cb) => {
       }
       console.clear();
     }
+    stream.end();
+    cb();
   }
   
   stream.on('drain', () => {
     write();
   });
 
-  stream.write(COLUMNS.join(',') + '\r\n');
+  stream.write(COLUMNS.join(',') + '\n');
   write();
 }
 
-
-// genRestaurantSeed(10000000, () => {
-//   console.log('restaurants generated');
-// });
+genRestaurantSeed(10000000, () => {
+  console.log('all done');
+});
 
 genImageSeed(10000000, () => {
-  console.log('images generated');
+  console.log('all done');
 });
 

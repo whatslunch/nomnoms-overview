@@ -11,8 +11,8 @@
     "build:watch": "webpack -d --watch",
     "start:watch": "nodemon ./server/index.js",
     "seed:gen": "node ./database/seed/generate.js",
-    "load:db0": "node ./database/db0/seed.js",
-    "load:db1": "node ./database/db1/seed.js",
+    "seed:db0": "node ./database/db0/seed.js",
+    "seed:db1": "node ./database/db1/seed.js",
     "test": "jest --coverage"
   },
   "dependencies": {

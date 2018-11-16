@@ -1,14 +1,15 @@
 const express = require('express');
 const path = require('path');
-
-const dbHook = 0;
+const parser = require('body-parser');
+const dbHook = 1;
 const db = require(`../database/db${dbHook}/index.js`);
 
 const app = express();
 const PORT = process.env.PORT || 9001;
 
 app.use(express.static(path.join(__dirname, '../public/')));
-app.use(express.json());
+// app.use(express.json());
+app.use(parser.json());
 // app.get('/:id', (req, res) => {
 //   res.sendFile(path.join(__dirname, '../public/index.html'));
 // });
@@ -26,35 +27,35 @@ app.get('/api/:id', (req, res) => {
 app.get('/restaurant', (req, res) => {
   db.Restaurant.getAll((err, data) => {
     if (err) res.status(500).send(err.message);
-    else rest.end(data);
+    else res.end(JSON.stringify(data));
   });
 });
 
 app.get('/restaurant/:id', (req, res) => {
   db.Restaurant.getOne(req.params.id, (err, data) => {
     if (err) res.status(500).send(err.message);
-    else res.end(data);
+    else res.end(JSON.stringify(data));
   });
 });
 
 app.post('/restaurant', (req, res) => {
-  db.Restaurant.addOne(req.body, err => {
+  db.Restaurant.addOne(req.body, (err, data) => {
     if (err) res.status(500).send(err.message);
-    else res.end();
+    else res.end(JSON.stringify(data));
   });
 });
 
 app.put('/restaurant/:id', (req, res) => {
-  db.Restaurant.updateOne(req.params.id, req.body, err => {
+  db.Restaurant.updateOne(req.params.id, req.body, (err, data) => {
     if (err) res.status(500).send(err.message);
-    else res.end();
+    else res.end(JSON.stringify(data));
   });
 });
 
 app.delete('/restaurant/:id', (req, res) => {
-  db.Restaurant.deleteOne(req.params.id, err => {
+  db.Restaurant.deleteOne(req.params.id, (err, data) => {
     if (err) res.status(500).send(err.message);
-    else res.end();
+    else res.end(JSON.stringify(data));
   });
 }); 
 
