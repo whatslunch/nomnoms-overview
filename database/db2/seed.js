@@ -1,44 +1,70 @@
-const pg            = require('pg');
-const copyFrom      = require('pg-copy-streams').from;
 const fs            = require('fs');
-const path          = require('path')
+const LineInput     = require('line-input-stream');
+const async         = require('async');
+const path          = require('path');
 const {performance} = require('perf_hooks');
+
+const mongoose      = require('mongoose');
+const Restaurant    = require('./index.js').Restaurant;
 
 let t0 = performance.now();
 
-pg.connect('postgres://localhost:5432/nomnoms', (err, client, done) => {
-  client.query('DROP TABLE IF EXISTS restaurants')
-    .on('end', () => {
-      client.query('CREATE TABLE IF NOT EXISTS restaurants(id SERIAL PRIMARY KEY, name VARCHAR(100), lat DECIMAL(10, 6), lng DECIMAL(10, 6), address TEXT, cost INT, phone TEXT, website TEXT)');
-      const pgslStream = client.query(copyFrom('COPY restaurants (name, lat, lng, address, cost, phone, website) FROM STDIN CSV HEADER'));
-      const filePath = path.join(__dirname, './../seed/restaurants.csv');
-      const fileStream = fs.createReadStream(filePath);
-      fileStream.on('error', done);
-      pgslStream.on('error', done);
-      pgslStream.on('end', () => {;
-        let t1 = performance.now();
-        console.log(`elapsed time (restaurants): ${((t1 - t0)/1000).toFixed(2)} seconds`);
-        done();
-      });
-      fileStream.pipe(pgslStream);
-    });
-});
+const getRandomBetween = (max = 1, min = 0, fix = 0) => {
+  return (Math.random() * (max - min) + min).toFixed(fix);
+}
 
-pg.connect('postgres://localhost:5432/nomnoms', (err, client, done) => {
-  client.query('DROP TABLE IF EXISTS images')
-    .on('end', () => {
-      client.query('CREATE TABLE IF NOT EXISTS images(id SERIAL PRIMARY KEY, src VARCHAR(100), restaurant_id INTEGER REFERENCES restaurants(id))');
-      const pgslStream = client.query(copyFrom('COPY images (src, restaurant_id) FROM STDIN CSV HEADER'));
-      const filePath = path.join(__dirname, './../seed/images.csv');
-      const fileStream = fs.createReadStream(filePath);
-      fileStream.on('error', done);
-      pgslStream.on('error', done);
-      pgslStream.on('end', () => {
-        let t1 = performance.now();
-        console.log(`elapsed time (images): ${((t1 - t0)/1000).toFixed(2)} seconds`);
-        done();
-      });
-      fileStream.pipe(pgslStream);
-    });
-});
+/////// =>
+const stream = LineInput(fs.createReadStream(path.join(__dirname, './../seed/restaurants.csv')));
+stream.setDelimiter('\n');
 
+mongoose.connection.on('open', (err, conn) => {
+  Restaurant.collection.drop(() => {
+    let bulk = Restaurant.collection.initializeOrderedBulkOp();
+    let counter = 0;
+    
+    //err
+    stream.on('error', err => { console.log(err) });
+    
+    //line
+    stream.on('line', line => {
+      let row = line.split(',');
+      let obj = {
+        id: counter,
+        name: row[0],
+        lat: row[1],
+        lng: row[2],
+        address: row[3],
+        cost: row[4],
+        phone: row[5],
+        website: row[6],
+        images: [],
+      }
+      for (let j = 0; j < 3; j += 1) {
+        obj.images.push(`https://s3.amazonaws.com/whats-lunch/images/${getRandomBetween(23, 0, 0)}.jpg`);
+      }
+      bulk.insert(obj);
+      
+      counter += 1;
+
+      if (counter % 1000 === 0) {
+        console.log((counter/10000000 * 100) + '%');
+        stream.pause();
+        bulk.execute(err => {
+          if (err) console.log(err);
+          else {
+            bulk = Restaurant.collection.initializeOrderedBulkOp();
+            stream.resume();
+            console.clear();
+          }
+        });
+      }
+    });
+
+    //end
+    stream.on('end', () => {
+      let t1 = performance.now();
+      console.log(`elapsed time (restaurants): ${((t1 - t0)/1000).toFixed(2)} seconds`);
+      mongoose.connection.close();
+    });
+  });
+});

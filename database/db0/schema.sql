@@ -1,4 +1,6 @@
-CREATE DATABASE IF NOT EXISTS nomnoms;
+
+DROP DATABASE IF EXISTS nomnoms;
+CREATE DATABASE nomnoms;
 
 USE nomnoms;
 
@@ -23,8 +25,6 @@ CREATE TABLE images (
   restaurant_id BIGINT UNSIGNED,
   FOREIGN KEY (restaurant_id) REFERENCES restaurants(id) ON DELETE CASCADE
 );
-
-
 
 LOAD DATA INFILE '/Users/wgodfrey/Documents/HackReactor/immersive/hrsf105-system-design-capstone/nomnoms-overview/database/seed/restaurants.csv'
 INTO TABLE restaurants 
