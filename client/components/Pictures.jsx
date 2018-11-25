@@ -112,7 +112,7 @@ const AddressWrapper = styled.div`
 
 class Pictures extends React.Component {
   static fetchData(id, callback) {
-    axios.get(`/api/${id}`)
+    axios.get(`api/${id}`)
       .then((response) => {
         callback(response.data);
       });
@@ -174,21 +174,17 @@ class Pictures extends React.Component {
   }
 
   parseData(data) {
-    const newArray = [];
     let costString = '';
-    data.images.forEach((image) => {
-      newArray.push(image.image);
-    });
-    for (let i = 0; i < data.restaurant[0].cost; i += 1) {
+    for (let i = 0; i < data.cost; i += 1) {
       costString += '$';
     }
     this.setState({
-      images: newArray,
+      images: data.images,
       restaurant: {
-        address: data.restaurant[0].address,
-        name: data.restaurant[0].name,
-        phone: data.restaurant[0].phone,
-        website: data.restaurant[0].website,
+        address: data.address,
+        name: data.name,
+        phone: data.phone,
+        website: data.website,
         googleMap: 'https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwitxdjqkNfeAhWKrVQKHSxTCd0QjRx6BAgBEAU&url=https%3A%2F%2Fevents.mobilizeamerica.io%2Fmidems%2Fevent%2F8147%2F&psig=AOvVaw20i7ZQ1X9V-IoF-Zixb5nP&ust=1542396484413272',
         cost: costString,
       },

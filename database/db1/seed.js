@@ -36,10 +36,12 @@ pg.connect('postgres://localhost:5432/nomnoms', (err, client, done) => {
       pgslStream.on('error', () => {console.log('pqsl stream err'); done();});
       pgslStream.on('end', () => {
         console.log('done loading images');
-        client.query('ALTER TABLE images ADD CONSTRAINT constrain_fkey FOREIGN KEY (restaurant_id) REFERENCES restaurants(id);')
-        let t1 = performance.now();
-        console.log(`elapsed time (images): ${((t1 - t0)/1000).toFixed(2)} seconds`);
-        done();
+        client.query('ALTER TABLE images ADD CONSTRAINT constrain_fkey FOREIGN KEY (restaurant_id) REFERENCES restaurants(id)');
+        client.query('CREATE INDEX ON images (restaurant_id)', () => {
+          let t1 = performance.now();
+          console.log(`elapsed time (images): ${((t1 - t0)/1000).toFixed(2)} seconds`);
+          done();
+        });
       });
       fileStream.pipe(pgslStream);
     });
