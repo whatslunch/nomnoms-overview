@@ -14,3 +14,7 @@ public/bundle.js
 database/seed/restaurants.csv
 database/seed/images.csv
 
+# new relic, k6
+newrelic.js
+newrelic_agent.log
+stress.js
