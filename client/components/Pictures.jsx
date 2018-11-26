@@ -112,7 +112,7 @@ const AddressWrapper = styled.div`
 
 class Pictures extends React.Component {
   static fetchData(id, callback) {
-    axios.get(`api/${id}`)
+    axios.get(`api/overview/${id}`)
       .then((response) => {
         callback(response.data);
       });
@@ -144,7 +144,7 @@ class Pictures extends React.Component {
   }
 
   componentDidMount() {
-    const id = window.location.pathname.slice(1);
+    const id = window.location.pathname.slice(1) === ''? 9999999: window.location.pathname.slice(1);
     Pictures.fetchData(id, (data) => {
       this.parseData(data);
     });
