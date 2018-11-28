@@ -10,8 +10,15 @@ const PORT = process.env.PORT || 9001;
 app.use(express.static(path.join(__dirname, '../public/')));
 app.use(parser.json());
 
+const React = require('react');
+require('react-dom-server');
+const App = require('../client/components/App');
+const Html = require('./client/components/Html');
+
 app.get('/:id', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
+  // res.sendFile(path.join(__dirname, '../public/index.html'));
+  res.send(Html(renderToString(App)));
+
 });
 
 app.get('/api/overview/:id', (req, res) => {
@@ -20,13 +27,6 @@ app.get('/api/overview/:id', (req, res) => {
     else res.end(JSON.stringify(data));
   });
 });
-
-// app.get('/restaurant', (req, res) => {
-//   db.Restaurant.find({}, (err, data) => {
-//     if (err) res.status(500).send(err.message);
-//     else res.end(JSON.stringify(data));
-//   });
-// });
 
 app.get('/restaurant/:id', (req, res) => {
   db.Restaurant.findOne(req.params, (err, data) => {
