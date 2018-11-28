@@ -3,28 +3,30 @@ const express = require('express');
 const path = require('path');
 const parser = require('body-parser');
 const db = require(`../database/db2/index.js`);
-
+const redis = require('redis').createClient(6379, '54.160.130.80');
 const app = express();
 const PORT = process.env.PORT || 9001;
 
 app.use(express.static(path.join(__dirname, '../public/')));
 app.use(parser.json());
 
-const React = require('react');
-require('react-dom-server');
-const App = require('../client/components/App');
-const Html = require('./client/components/Html');
-
 app.get('/:id', (req, res) => {
-  // res.sendFile(path.join(__dirname, '../public/index.html'));
-  res.send(Html(renderToString(App)));
-
+  res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
 app.get('/api/overview/:id', (req, res) => {
-  db.Restaurant.findOne(req.params, (err, data) => {
-    if (err) res.status(500).send(err.message);
-    else res.end(JSON.stringify(data));
+  redis.get(req.params.id, (err, data) => {
+    if (data) res.end(data);
+    else {
+      db.Restaurant.findOne(req.params, (err, data) => {
+        if (err) res.status(500).send(err.message);
+        else {
+          redis.set(req.params.id, JSON.stringify(data), () => {
+            res.end(JSON.stringify(data));
+          });
+        }
+      });
+    } 
   });
 });
 
