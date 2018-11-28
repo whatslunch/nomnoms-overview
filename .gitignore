@@ -4,17 +4,15 @@
 ## NPM ##
 node_modules/
 
-#coverage logs
+#testing
 coverage/
+tests/
 
 # compiled webpack
 public/bundle.js
 
-# static data
+# static data, old db options
 database/seed/restaurants.csv
 database/seed/images.csv
-
-# new relic, k6
-newrelic.js
-newrelic_agent.log
-stress.js
+database/db0/
+database/db1/

@@ -1,5 +1,8 @@
 const mongoose      = require('mongoose');
-const db            = mongoose.connect('mongodb://localhost/nomnoms',{ useNewUrlParser: true, useCreateIndex: true });
+const db            = mongoose.connect('mongodb://admin:banana@35.171.154.208/nomnoms',{ 
+                        useNewUrlParser: true, 
+                        useCreateIndex: true,
+                      });
 
 const RestaurantSchema = new mongoose.Schema({
   id: {type: Number, index: true},

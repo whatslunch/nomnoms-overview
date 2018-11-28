@@ -2,8 +2,7 @@ require('newrelic');
 const express = require('express');
 const path = require('path');
 const parser = require('body-parser');
-const dbHook = 2;
-const db = require(`../database/db${dbHook}/index.js`);
+const db = require(`../database/db2/index.js`);
 
 const app = express();
 const PORT = process.env.PORT || 9001;
@@ -16,18 +15,10 @@ app.get('/:id', (req, res) => {
 });
 
 app.get('/api/overview/:id', (req, res) => {
-  if (dbHook === 2) {
-    console.log(req.params)
-    db.Restaurant.findOne(req.params, (err, data) => {
-      if (err) res.status(500).send(err.message);
-      else res.end(JSON.stringify(data));
-    });
-  } else {
-    db.Restaurant.findOneWithImages(req.params, (err, data) => {
-      if (err) res.status(500).send(err.message);
-      else res.end(JSON.stringify(data));
-    });
-  }
+  db.Restaurant.findOne(req.params, (err, data) => {
+    if (err) res.status(500).send(err.message);
+    else res.end(JSON.stringify(data));
+  });
 });
 
 // app.get('/restaurant', (req, res) => {
